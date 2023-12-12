@@ -1,37 +1,6 @@
 import { CharacterCard } from "./components/CharacterCard/CharacterCard.js";
 
-export const cardContainer = document.querySelector(
-  '[data-js="card-container"]'
-);
-
-// function CharacterCard() {
-//   const card = document.createElement("li");
-//   card.classList.add("card");
-//   card.innerHTML = `<div class="card__image-container">
-//     <img
-//       class="card__image"
-//       src="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
-//       alt="Rick Sanchez"
-//     />
-//     <div class="card__image-gradient"></div>
-//   </div>
-//   <div class="card__content">
-//     <h2 class="card__title">Rick Sanchez</h2>
-//     <dl class="card__info">
-//       <dt class="card__info-title">Status</dt>
-//       <dd class="card__info-description">Alive</dd>
-//       <dt class="card__info-title">Type</dt>
-//       <dd class="card__info-description"></dd>
-//       <dt class="card__info-title">Occurrences</dt>
-//       <dd class="card__info-description">51</dd>
-//     </dl>
-//   </div>`;
-//   cardContainer.append(card);
-//   return card;
-// }
-
-CharacterCard();
-
+const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
@@ -45,3 +14,15 @@ const pagination = document.querySelector('[data-js="pagination"]');
 const maxPage = 1;
 const page = 1;
 const searchQuery = "";
+
+export async function fetchCharacters() {
+  const response = await fetch("https://rickandmortyapi.com/api/character");
+  const data = await response.json();
+  console.log(data);
+  return data.results;
+}
+
+const characters = await fetchCharacters();
+characters.forEach((character) => {
+  CharacterCard(character);
+});
